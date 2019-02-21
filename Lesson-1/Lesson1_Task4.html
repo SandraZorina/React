@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DZ React Lesson-1 Task-4</title>
+</head>
+<body>
+    <script>
+// Задание 4. При помощи генератора написать функцию - анкету, которая запрашивает у пользователя на ввод параметры и передаёт их в генератор. В конце, когда генератор завершается, он должен вернуть все введённые входные параметры в виде объекта. Этот объект нужно вывести в консоли.
+
+        function* quest() {
+            let play = true;
+            let params = {};
+            let i = 0;
+            while(play) {
+                params[`${prompt("Введите название параметра") || i}`] = prompt('Введите название параметра');
+                play = confirm("Ввести ещё?");
+                yield params;
+                i++;
+            };
+            return params;
+        };
+
+        let q = quest();
+        let result;
+
+        for(result of q) {
+        };
+
+        console.log(result);
+
+    </script>
+</body>
+</html>

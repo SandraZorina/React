@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DZ React Lesson-1 Task-3</title>
+</head>
+<body>
+    <script>
+// Задание 3. Необходимо написать иерархию классов вида:
+// Human -> Employee -> Developer
+// Human -> Employee -> Manager
+// Каждый Менеджер (Manager) должен иметь внутренний массив своих сотрудников (разработчиков), а также методы по удалению/добавлению разработчиков.
+// Каждый Разработчик (Developer) должны иметь ссылку на Менеджера и методы для изменения менеджера (имеется ввиду возможность назначить другого менеджера).
+// У класса Human должны быть следующие параметры: name (строка), age (число), dateOfBirth (строка или дата)
+// У класса Employee должны присутствовать параметры: salary (число), department (строка)
+// В классе Human должен присутствовать метод displayInfo, который возвращает строку со всеми параметрами экземпляра Human.
+// В классе Employee должен быть реализовать такой же метод (displayInfo), который вызывает базовый метод и дополняет его параметрами из экземпляра Employee
+// Чтобы вызвать метод базового класса, необходимо внутри вызова метода displayInfo класса Employee написать: super.displayInfo(), это вызовет метод disaplyInfo класс Human и вернет строку с параметрами Human'a.
+
+        class Human {
+            constructor(name, age, dateOfBirth) {
+                this.name = name;
+                this.age = age;
+                this.dateOfBirth = dateOfBirth;
+            };
+            displayInfo() {
+                return `${this.name}, ${this.age}, ${this.dateOfBirth}`;
+            };
+        };
+
+        class Employee extends Human {
+            constructor(name, age, dateOfBirth, salary, department) {
+                super(name, age, dateOfBirth);
+                this.salary = salary;
+                this.department = department;
+            };
+            displayInfo() {
+                return `${super.displayInfo()}, ${this.salary}, ${this.department}`;
+            };
+        };
+
+        class Manager extends Employee {
+            constructor(name, age, dateOfBirth, salary, department) {
+                super(name, age, dateOfBirth, salary, department);
+                this.developers = [];
+            };
+            addDeveloper(developer) {
+                this.developers.push(developer);
+            };
+            removeDeveloper(developer) {
+                let id = this.developers.indexOf(developer);
+                this.developers.splice(id);
+            };
+        };
+
+        class Developer extends Employee {
+            constructor(name, age, dateOfBirth, salary, department) {
+                super(name, age, dateOfBirth, salary, department);
+                this.manager = {};
+            };
+            setManager(manager) {
+                this.manager = manager;
+            };
+            unsetManager() {
+                this.manager = {};
+            };
+        };
+
+        let m1 = new Manager("Ann", 35, "02.03.1984", 3500, "Sale");
+        let m2 = new Manager("Sam", 40, "03.04.1979", 4000, "Sale");
+        let m3 = new Manager("Max", 45, "04.05.1974", 4500, "Sale");
+
+        let d1 = new Developer("Fillip", 30, "05.06.1989", 5000, "IT");
+        let d2 = new Developer("Andrew", 31, "06.07.1988", 5500, "IT");
+        let d3 = new Developer("Amanda", 32, "07.08.1987", 6000, "IT");
+        
+        m1.addDeveloper(d1);
+        m1.addDeveloper(d2);
+        m2.addDeveloper(d3);
+        d1.setManager(m1);
+        d1.setManager(m1);
+        d1.setManager(m2);
+        m1.removeDeveloper(d2);
+        d2.unsetManager();
+        
+        console.log("Managers\n\t", m1, "\n\t", m2, "\n\t", m3, "\n", "Developers\n\t", d1, "\n\t", d2, "\n\t", d3);
+
+    </script>
+</body>
+</html>
