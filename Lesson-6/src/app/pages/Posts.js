@@ -38,7 +38,7 @@ export default class Posts extends React.Component {
         return (
             <div>
                 <button className="btn btn-primary" onClick={this.newPost}>Добавить пост</button>
-                <PostsList post={this.state.posts}/>
+                <PostsList posts={this.state.posts}/>
             </div>
         );
     }
